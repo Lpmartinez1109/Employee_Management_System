@@ -1,10 +1,8 @@
-var inquirer = require ("inquirer");
 var mysql = require("mysql");
-
-var PORT = process.env.PORT || 8080;
+var inquirer = require ("inquirer");
 
 connection = mysql.createConnection({
-    host: "local host",
+    host: "localhost",
     port: 3306,
     user: "root",
     password: "root",
@@ -41,6 +39,7 @@ function manageMenu (){
          }
      })
  }
+//  view current employees
 function currentEmployees() {
     inquirer.prompt(
         {
@@ -61,16 +60,67 @@ function currentEmployees() {
     })
 };
     function viewDepartment(){
-        // connection.query("select * from department(name)"  , function(err, result){
-        //     if (err) throw err;
-        //     console.log(result);
-            
-        // })
-        manageMenu();
+        connection.query(`select * from department` , function(err, result){
+            if (err){
+                console.log("Error!") 
+            }
+            console.table(result)
+            manageMenu();
+        })
     };
     function viewRole(){
-        manageMenu();
+        connection.query(`select * from role`, function(err,result){
+            if (err){
+                console.log("Error!");
+                
+            }
+            console.table(result)
+            manageMenu();
+        })
+
     }
     function viewEmployee() {
-        manageMenu();
+        connection.query(`select * from employee`, function(err, results) {
+            if (err){
+                console.log("Error!");
+                
+            }
+            console.table(results)
+            manageMenu();
+        })
     }
+// add an employee
+function addEmployees() {
+
+    inquirer.prompt(
+        {
+            name: "addFirstName",
+            type: "input",
+            message: "What is your employee's first name?"
+        },
+        {
+           name: "addLastName",
+           type: "input",
+           message: "What is your employee's last name?" 
+        },
+        {
+            name: "addRole",
+            type: "list",
+            message: "What is this employee's role?",
+        }
+    ).then(function(answer) {
+        connection.query("insert into employee set ?",
+        {
+            first_name: answer.addFirstName,
+            last_name: answer.addLastName,
+        },
+        function(err) {
+            if (err){
+                console.log("Employee Not Added");
+            }
+            manageMenu();
+        }
+        )
+        
+    })
+}
