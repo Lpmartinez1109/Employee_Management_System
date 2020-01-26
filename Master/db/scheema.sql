@@ -1,8 +1,8 @@
-drop database if exists employee_db;
+drop database if exists employees_db;
 
-create database employee_db;
+create database employees_db;
 
-use employee_db;
+use employees_db;
 
 create table department (
     id int not null auto_increment primary key;
@@ -20,7 +20,7 @@ create table employee (
     id int not null auto_increment primary key,
     first_name varchar(30) not null,
     last_name varchar(30) not null,
-    role_id int unot null,
-    manager_id int not null
+    role_id int not null,
+    manager_id int
 )
     
