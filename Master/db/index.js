@@ -1,19 +1,18 @@
-const connection = require("./connection");
-const inquirer = require ("inquirer");
-const mysql = require("mysql");
+var inquirer = require ("inquirer");
+// var mysql = require("mysql");
 
-connection = mysql.createConnection({
-    host: "local host",
-    port: 3306,
-    user: "root",
-    password: "root",
-    database: employee_db
-});
+// connection = mysql.createConnection({
+//     host: "local host",
+//     port: 3306,
+//     user: "root",
+//     password: "root",
+//     database: "employee_db"
+// });
 
-connection.connect( function(err){
-    if (err) throw err;
-    manageMenu();
-})
+// connection.connect(function(err){
+//     if (err) throw err;
+//     manageMenu();
+// })
 
  function manageMenu (){
      inquirer.prompt(
@@ -43,3 +42,5 @@ connection.connect( function(err){
          }
      })
  }
+
+ manageMenu();
