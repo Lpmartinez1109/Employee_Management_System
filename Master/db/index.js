@@ -94,40 +94,50 @@ function viewEmployee() {
 }
 // add an employee
 function addEmployees() {
-
     inquirer.prompt([
         {
-            name: "firstName",
+            name:"first_name",
             type: "input",
             message: "What is your employee's first name?"
         },
         {
-            name: "lastName",
+            name: "last_name",
             type: "input",
             message: "What is your employee's last name?"
         },
         {
-            name: "employeeRole",
+            name: "role_id",
             type: "list",
-            message: "What role does this employee have?",
-            choices: [1, 2, 3, 4]
-
+            message: "What is your employee's role id?",
+            choices: [1,2,3,4]
         }
-    ]).then(function (answer) {
-        connection.query("insert into employee(first_name, last_name, role_id", {
-            first_name: answer.firstName,
-            last_name: answer.lastName,
-            role_id: answer.employeeRole
-        }, function (err) {
-            if (err) {
+    ]).then(function({first_name, last_name, role_id}){
+        connection.query(`insert into employee (first_name, last_name, role_id) values ('${first_name}', '${last_name}','${role_id}')`, function(err,result){
+            if (err){
                 console.log("Error!");
-
+                
             }
             manageMenu();
-
         })
-     })
+    })
 }
+
+
 // remove employee function
 function removeEmployee() {
+    inquirer.prompt(
+        {
+
+        }).then(function(){
+            connection.query("delete from employee where ?", function(err, results){
+                if (err){
+                    console.log("Error!");
+                    
+                }
+            })
+        })
 }
+// update employee function
+// function updateEmployees() {
+    
+// }
